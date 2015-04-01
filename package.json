@@ -1,11 +1,22 @@
 {
-  "name": "Gulp",
+  "name": "slush-freead",
+  "description": "Boilerprate para a equipe de Desenvolvimento da Freead Comunicação",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "homepage": "https://github.com/lucasoneves",
+  "author": {
+    "name": "Lucas Neves",
+    "email": "lneves@freead.com.br"
   },
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucasoneves"
+  },
+
+  "bugs": {
+    "url": "https://github.com/lucasoneves"
+  },
+
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -19,5 +30,9 @@
     "gulp-util": "^3.0.4",
     "rsyncwrapper": "^0.4.2",
     "tiny-lr": "^0.1.5"
-  }
+  },
+
+  "keywords": [
+    "slushgenerator"
+  ]
 }
