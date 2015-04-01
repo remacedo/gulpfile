@@ -6,7 +6,6 @@ var sass = require('gulp-ruby-sass');
 var imagemin = require('gulp-imagemin');
 var minifyHTML = require('gulp-minify-html');
 var browserSync = require('browser-sync');
-var rsync = require('rsyncwrapper').rsync;
 
 var directory = 'build';
 
@@ -58,24 +57,10 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-// Deploy FTP
-gulp.task('deploy', function(){
-  rsync({
-    ssh: true,
-    src: './build/',
-    dest: 'desenvfreead@desenvfreead.com.br:/Web/Gulp/',
-    recursive: true,
-    syncDest: true,
-    args: ['--verbose']
-  }, function(error, stdout, stderr, cmd) {
-      gutil.log(stdout);
-  });
-});
-
 // Watch 
 gulp.task('watch', function(){
 	gulp.watch('src/js/*.js', ['scripts']);
 	gulp.watch('src/sass/*.scss', ['sass']);
 });
 
-gulp.task('default', ['scripts', 'sass', 'minify-html', 'images', 'browser-sync', 'watch', 'deploy']);
+gulp.task('default', ['scripts', 'sass', 'minify-html', 'images', 'browser-sync', 'watch']);
