@@ -9,6 +9,7 @@ body {
 	width: 80%;
 	margin: 0 auto;
 	text-align: center;
+	text-transform: capitalize;
 }
 
 ul {
@@ -25,17 +26,13 @@ li {
 }
 
 .sucesso {
-	color:  #fff;;
+	color:  #fff;
 	background: #34d38e;
 }
 
 .pendente {
-	background: #fff26b;
+	background: #f9f26b;
 	color: #c6bb51;
-}
-
-.container {
-	width: 300px;
 }
 
 @media (max-width: 815px){

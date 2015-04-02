@@ -6,6 +6,8 @@ var sass = require('gulp-ruby-sass');
 var imagemin = require('gulp-imagemin');
 var minifyHTML = require('gulp-minify-html');
 var browserSync = require('browser-sync');
+var spritesmith = require('gulp.spritesmith');
+var csso = require('gulp-csso');
 
 var directory = 'build';
 
@@ -34,10 +36,21 @@ gulp.task('images', function(){
 	.src('src/images/*')
 	.pipe(imagemin())
 	.pipe(gulp.dest(directory + '/images'));
-})
+});
+
+//Sprites
+gulp.task('sprite', function() {
+  var spriteData = gulp.src('src/sprites/*')
+  .pipe(spritesmith({
+    imgName: 'sprite.png',
+    cssName: 'sprite.css'
+  }));
+
+  spriteData.pipe(gulp.dest('build/sprites'));
+});
 
 // Minify HTML
-gulp.task('minify-html', function() {
+gulp.task('minify-html', function(){
 	var opts = {
 		conditionals: true,
 		spare:true
@@ -45,7 +58,8 @@ gulp.task('minify-html', function() {
 
 	return gulp.src('*.html')
 	.pipe(minifyHTML(opts))
-	.pipe(gulp.dest(directory));
+	.pipe(concat('index.min.html'))
+	.pipe(gulp.dest('build/'));
 });
 
 // Browser Sync
@@ -63,4 +77,4 @@ gulp.task('watch', function(){
 	gulp.watch('src/sass/*.scss', ['sass']);
 });
 
-gulp.task('default', ['scripts', 'sass', 'minify-html', 'images', 'browser-sync', 'watch']);
+gulp.task('default', ['scripts', 'sass', 'images', 'browser-sync', 'sprite', 'watch']);
