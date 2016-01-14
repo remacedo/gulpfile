@@ -4,10 +4,8 @@ var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var sass = require('gulp-ruby-sass');
 var imagemin = require('gulp-imagemin');
-var minifyHTML = require('gulp-minify-html');
 var browserSync = require('browser-sync');
 var spritesmith = require('gulp.spritesmith');
-var csso = require('gulp-csso');
 
 var directory = 'build';
 
@@ -47,19 +45,6 @@ gulp.task('sprite', function() {
   }));
 
   spriteData.pipe(gulp.dest('build/sprites'));
-});
-
-// Minify HTML
-gulp.task('minify-html', function(){
-	var opts = {
-		conditionals: true,
-		spare:true
-	};
-
-	return gulp.src('*.html')
-	.pipe(minifyHTML(opts))
-	.pipe(concat('index.min.html'))
-	.pipe(gulp.dest('build/'));
 });
 
 // Browser Sync
