@@ -6,8 +6,10 @@ var sass = require('gulp-ruby-sass');
 var imagemin = require('gulp-imagemin');
 var browserSync = require('browser-sync');
 var spritesmith = require('gulp.spritesmith');
+var wrap = require('gulp-wrap');
+var fileinclude = require('gulp-file-include');
 
-var directory = 'build';
+directory = 'build';
 
 // Scripts
 gulp.task('scripts', function(){
@@ -51,15 +53,25 @@ gulp.task('sprite', function() {
 gulp.task('browser-sync', function() {
 	browserSync.init(["index.html", "build/css/style.min.css", "build/js/scripts.min.js"], {
 		server: {
-			baseDir: "./"
+			baseDir: "./build/"
 		}
 	});
+});
+ 
+gulp.task('fileinclude', function() {
+  gulp.src(['index.html'])
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: './src/includes/'
+    }))
+    .pipe(gulp.dest('./build/'));
 });
 
 // Watch 
 gulp.task('watch', function(){
 	gulp.watch('src/js/*.js', ['scripts']);
 	gulp.watch('src/sass/*.scss', ['sass']);
+  gulp.watch('src/includes/*.html', ['fileinclude']);
 });
 
-gulp.task('default', ['scripts', 'sass', 'images', 'browser-sync', 'sprite', 'watch']);
+gulp.task('default', ['scripts', 'sass', 'images', 'browser-sync', 'sprite', 'watch', 'fileinclude']);
