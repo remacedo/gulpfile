@@ -6,10 +6,16 @@ var sass = require('gulp-ruby-sass');
 var imagemin = require('gulp-imagemin');
 var browserSync = require('browser-sync');
 var spritesmith = require('gulp.spritesmith');
-var wrap = require('gulp-wrap');
-var fileinclude = require('gulp-file-include');
+var htmlmin = require('gulp-htmlmin');
 
-directory = 'build';
+var directory = 'build';
+
+// Minify HTML
+gulp.task('htmlmin', function() {
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('build'))
+});
 
 // Scripts
 gulp.task('scripts', function(){
@@ -53,25 +59,16 @@ gulp.task('sprite', function() {
 gulp.task('browser-sync', function() {
 	browserSync.init(["index.html", "build/css/style.min.css", "build/js/scripts.min.js"], {
 		server: {
-			baseDir: "./build/"
+			baseDir: "./"
 		}
 	});
-});
- 
-gulp.task('fileinclude', function() {
-  gulp.src(['index.html'])
-    .pipe(fileinclude({
-      prefix: '@@',
-      basepath: './src/includes/'
-    }))
-    .pipe(gulp.dest('./build/'));
 });
 
 // Watch 
 gulp.task('watch', function(){
 	gulp.watch('src/js/*.js', ['scripts']);
 	gulp.watch('src/sass/*.scss', ['sass']);
-  gulp.watch('src/includes/*.html', ['fileinclude']);
+	gulp.watch('src/*.html', ['htmlmin']);
 });
 
-gulp.task('default', ['scripts', 'sass', 'images', 'browser-sync', 'sprite', 'watch', 'fileinclude']);
+gulp.task('default', ['scripts', 'sass', 'images', 'browser-sync', 'sprite', 'htmlmin', 'watch']);
